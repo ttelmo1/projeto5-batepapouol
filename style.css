@@ -55,10 +55,13 @@ footer{
 
 .input-box{
     padding-left: 17px;
+    width: 70%;
 }
 
 .input-box input{
     border: none;
+    width: 100%;
+    height: 30px;
 }
 
 footer ion-icon{
