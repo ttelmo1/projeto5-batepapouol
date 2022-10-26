@@ -1,5 +1,18 @@
 let message = [];
+let nameUser = prompt("Digite seu usuário")
 
+
+const promessa = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages")
+
+promessa.then(msgChegou);
+
+function msgChegou(resposta){
+    console.log(resposta);
+    console.log(resposta.data);
+    message = resposta.data;
+
+    renderizarMsg();
+}
 
 function sendMsg(){
     let msg = document.querySelector(".message").value;
@@ -10,26 +23,45 @@ function sendMsg(){
     
     renderizarMsg();
 
-    msg = '';
+    rolar();
+
+    msg = "";
 }
 
 function renderizarMsg(){
 
     let chatRenderizado = document.querySelector(".conversa");
 
+    chatRenderizado.innerHTML = "";
+
+    let d = new Date();
+    let h = d.toLocaleTimeString();
+
     for(let i = 0; i < message.length; i++){
 
         let mensagemEnviada = message[i];
+        let d = new Date();
+        let h = d.toLocaleTimeString();
 
         chatRenderizado.innerHTML += `
-        <li>
+        <li class="novaMsg">
+            (${h})
+            <span>${nameUser}</span>
+            para
+            Todos:
             ${mensagemEnviada.mensagem}
         </li>
     `;
-    }
     
+    chatRenderizado.scrollIntoView();
+    } 
 }
 renderizarMsg();
+
+function rolar(){
+    let conversa = document.querySelector(".rolar");
+    conversa.scrollIntoView();
+}
 
 function abrirSideBar(){
     document.querySelector(".back").style.visibility="visible";

@@ -7,14 +7,15 @@
     <title>Chat Uol</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </head>
-<body>
+<body >
     <header>
         <img src="img/logo 1.png" alt="O seu chat!">
         <ion-icon onclick="abrirSideBar()" name="people"></ion-icon>
     </header>
-    <main>
+    <main class="rolar">
         <div class="chat">
             <ul class="conversa">
 
@@ -30,17 +31,33 @@
     </footer>
     <div class="back">
         <div class="sidebar">
-            <h1>Escolha um contato para enviar mensagem:</h1>
-            <ul>
+            <div class="menu-text">
+                <h1>Escolha um contato</h1><br>
+                <h1>para enviar mensagem:</h1>
+            </div>
+            <ul class="contatos">
                 <li>
                     <ion-icon name="people"></ion-icon>
-                    Todos
+                    Será criado atráves de js
                 </li>
                 <li>
                     <ion-icon name="people"></ion-icon>
-                    Todos
+                    Será criado atráves de js
                 </li>
             </ul>
+            <div class="menu-text">
+                <h1>Escolha a visibilidade:</h1>
+            </div>
+                <ul class="contatos">
+                    <li>
+                        <ion-icon name="lock-open"></ion-icon>
+                        Público
+                    </li>
+                    <li>
+                        <ion-icon name="lock-open"></ion-icon>
+                        Reservadamente
+                    </li>
+                </ul>
             <ion-icon onclick="fecharSideBar()" class="close" name="close-circle"></ion-icon>
         </div>
     </div>
