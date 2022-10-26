@@ -36,6 +36,8 @@ header ion-icon{
 main{
     padding-top: 80px;
     position: absolute;
+    padding-bottom: 80px;
+    margin-bottom: 80px;
 }
 
 footer{
@@ -108,10 +110,43 @@ footer ion-icon{
     line-height: 18.75px;
 }
 
-.novaMsg span{
+.usuario, .destinatario{
     font-weight: 700;
 }
 
 .conversa{
     padding-top: 26px;
+}
+
+#status{
+    background-color: #DCDCDC;
+    margin: 2px 0;
+}
+
+#todos{
+    background-color: #FFFFFF;
+    margin: 2px 0;
+}
+
+#privado{
+    background-color: #FFDEDE;
+}
+
+.hora{
+    color: #AAAAAA;
+    font-size: 11px;
+}
+
+.novaMsg{
+    font-size: 14px;
+    line-height: 16px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-left: 5px;
+}
+
+.chat{
+    width: 100vh;
 }
