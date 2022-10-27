@@ -77,9 +77,14 @@ footer ion-icon{
     position: fixed;
     background-color: rgba(0, 0, 0, 0.6);
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     visibility: hidden;
     font-family: 'Roboto', sans-serif;
+}
+
+.cinza{
+    width: 30%;
+    display: flex;
 }
 
 .sidebar{
@@ -118,6 +123,10 @@ footer ion-icon{
     font-weight: 700;
 }
 
+.usuario, .conteudo, .participante{
+    word-break: break-all;
+}
+
 .conversa{
     padding-top: 26px;
 }
@@ -153,4 +162,21 @@ footer ion-icon{
 
 .chat{
     width: 100vh;
+}
+
+.contatos ion-icon{
+    width: 24px;
+    height: 17px;
+}
+
+#check{
+    visibility: hidden;
+    color: #28BB25;
+    position: fixed;
+    right: 10px;
+}
+
+.participante{
+    display: flex;
+    align-items: center;
 }
