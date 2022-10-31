@@ -1,35 +1,18 @@
 let message;
 let nameUser;
-login().then(response => {
-    console.log(response)
-}).catch(error => {
-    window.location.reload();
-})
+let checkMarkId = 0;
+let destino = "Todos"
 
-
-msgChegou();
-renderizarParticipantes();
-// Atualizar as mensagens
-// setInterval(function(){
-//     atualizarMsg()
-// }, 3000)
-
-setInterval(function () {
-    atualizarStatus()
-}, 5000)
-
-
-// setInterval(function () {
-//     let participantes = document.getElementById("online");
-//     participantes.innerHTML = "";
-//     renderizarParticipantes();
-// }, 10000)
-
-
-function atualizarStatus(){
-    axios.post("https://mock-api.driven.com.br/api/v6/uol/status",{
+function atualizarStatus() {
+    axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {
         name: nameUser
     })
+        .then(response => {
+            console.log("logado")
+        })
+        .catch(error => {
+            console.log("já está logado")
+        })
 }
 
 function atualizarMsg() {
@@ -51,9 +34,35 @@ function msgChegou(resposta) {
 
 //Iniciar login
 function login() {
-    nameUser = prompt("Digite seu usuário");
-    const particpant = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", { name: nameUser })
+    const nameUserLogin = document.getElementsByClassName("loginName")[0].value
+    nameUser = nameUserLogin
+    msgChegou();
+    renderizarParticipantes();
+    const particpant = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", { name: nameUserLogin })
     return particpant
+}
+
+function loginOk() {
+    login().then(response => {
+        document.getElementById("container").style.visibility = "hidden";
+        // Atualizar as mensagens
+        setInterval(function () {
+            atualizarMsg()
+        }, 3000)
+
+        setInterval(function () {
+            atualizarStatus()
+        }, 5000)
+
+
+        setInterval(function () {
+            let participantes = document.getElementById("online");
+            participantes.innerHTML = "";
+            renderizarParticipantes();
+        }, 10000)
+    }).catch(error => {
+        window.location.reload();
+    })
 }
 
 //Renderizar Participantes na barra lateral
@@ -65,19 +74,44 @@ function renderizarParticipantes() {
             let participante = response.data[i];
             console.log(participante)
             participantes.innerHTML += `
-            <li onclick="marcar()" data-identifier="participant" class="participante">
+            <li onclick="marcar(event)" id="${i}" data-identifier="participant" class="participante">
                 <ion-icon name="person-circle-outline"></ion-icon>
                 ${participante.name}
-                <div class="check"></div>
-                <ion-icon id="check" name="checkmark"></ion-icon>
             </li>`;
         }
     })
-    
+
 }
 
-function marcar(){
-    document.getElementById("check").style.visibility="visible"
+function marcar(e) {
+    let check = document.getElementById(e.target.id)
+    let checkStyle = document.getElementById("check")
+    if (checkMarkId == e.target.id && checkStyle != null) {
+        checkStyle.style.visibility = "hidden"
+        let remove = document.getElementById(`check${checkMarkId}`)
+        console.log(remove)
+        remove.remove()
+    }
+
+    else {
+        if (e.target.id != checkMarkId && checkMarkId != 0 && checkStyle != null) {
+            checkStyle.style.visibility = "hidden"
+            let remove = document.getElementById(`check${checkMarkId}`)
+            console.log(remove)
+            remove.remove()
+        }
+        check.innerHTML +=
+            `<div class="check" id="check${e.target.id}">
+             <ion-icon id="check" name="checkmark">
+        </ion-icon></div>`
+        check.classList.add("check")
+        document.getElementById("check").style.visibility = "visible"
+        destino = document.getElementById("destino").innerText = check.innerText
+        console.log(check.innerText)
+        console.log(check)
+        checkMarkId = e.target.id
+    }
+
 }
 
 
@@ -86,16 +120,17 @@ function marcar(){
 function sendMsg() {
     let msg = document.querySelector(".message");
 
-    let novoChat = { from: nameUser, to: "Todos", text: msg.value, type: "message" };
+    let novoChat = { from: nameUser, to: destino , text: msg.value, type: "message" };
     const message = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", novoChat)
         .then(response => {
-            
+
             atualizarMsg()
 
 
         })
         .catch(error => {
-            window.location.reload();
+            // window.location.reload();
+            console.log(error)
         });
 
     msg.value = ''
@@ -130,7 +165,7 @@ function renderizarMsg() {
 function verificarTipo(mensagem) {
     if (mensagem.type == "status") return "status"
     else if (mensagem.to == "Todos" && mensagem.type == "message") return "todos"
-    else if (mensagem.to == nameUser && mensagem.type == "message") return "privado"
+    else if (mensagem.from == nameUser && mensagem.type == "message") return "privado"
 }
 
 //Abrir e fechar o menu
@@ -143,14 +178,16 @@ function fecharSideBar() {
     document.querySelector(".back").style.visibility = "hidden";
     document.querySelector(".back").style.transition = "all 0.4s";
     document.querySelector(".back").style.transition = "ease-out";
+    let removeIcon = document.getElementById(`check${checkMarkId}`)
+    removeIcon.remove()
 }
 
-window.onload = function(){
+window.onload = function () {
     const elem = document.getElementById("inputMessage")
-    elem.addEventListener("keypress", function(e){
-        if(e.keyCode == 13){
-           e.preventDefault();
-           document.getElementById("sendButton").click();
+    elem.addEventListener("keypress", function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            document.getElementById("sendButton").click();
         }
     })
 };

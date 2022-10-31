@@ -11,6 +11,19 @@
     <script src="script.js"></script>
 </head>
 <body >
+    <div class="container" id="container">
+        <div class="logo">
+          <img src="img/logo 1.png" alt="O seu chat!" />
+        </div>
+        <div class="enterSite">
+          <div class="enterInput">
+            <input type="text" class="loginName" placeholder="Digite seu nome" />
+          </div>
+          <div onclick="loginOk()" class="enterButton">
+            <span class="loginEnter">Entrar</span>
+          </div>
+        </div>
+      </div>
     <header>
         <img src="img/logo 1.png" alt="O seu chat!">
         <ion-icon onclick="abrirSideBar()" name="people"></ion-icon>
@@ -25,6 +38,7 @@
     <footer>
         <div class="input-box">
             <input type="text" class="message" id="inputMessage" placeholder="Escreva aqui...">
+            <label for="" class="loginEnter" id="destino">Todos</label>
         </div>
         
         <ion-icon onclick="sendMsg()" id="sendButton" name="paper-plane-outline"></ion-icon>
