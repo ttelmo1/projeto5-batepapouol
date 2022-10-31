@@ -101,7 +101,7 @@ function marcar(e) {
             remove.remove()
         }
         check.innerHTML +=
-            `<div class="check" id="check${e.target.id}">
+            `<div class="check" data-identifier="visibility" id="check${e.target.id}">
              <ion-icon id="check" name="checkmark">
         </ion-icon></div>`
         check.classList.add("check")
