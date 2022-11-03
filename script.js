@@ -74,7 +74,7 @@ function renderizarParticipantes() {
             let participante = response.data[i];
             console.log(participante)
             participantes.innerHTML += `
-            <li onclick="marcar(event)" id="${i}" data-identifier="participant" class="participante">
+            <li onclick="marcar(event)" id="${i}" data-identifier="participant"  data-test="participant" class="participante">
                 <ion-icon name="person-circle-outline"></ion-icon>
                 ${participante.name}
             </li>`;
@@ -102,7 +102,7 @@ function marcar(e) {
         }
         check.innerHTML +=
             `<div class="check" data-identifier="visibility" id="check${e.target.id}">
-             <ion-icon id="check" name="checkmark">
+             <ion-icon data-test="check" id="check" name="checkmark">
         </ion-icon></div>`
         check.classList.add("check")
         document.getElementById("check").style.visibility = "visible"
@@ -146,7 +146,7 @@ function renderizarMsg() {
         if (mensagemEnviada.type == "status" || mensagemEnviada.to == "Todos" || mensagemEnviada.to == nameUser || mensagemEnviada.from == nameUser) {
             let tipo = verificarTipo(mensagemEnviada);
             chatRenderizado.innerHTML += `
-            <li class="novaMsg" id="${tipo}">
+            <li class="novaMsg" id="${tipo}" data-test="message">
                 <span class="hora">(${mensagemEnviada.time})</span>
                 <span class="usuario">${mensagemEnviada.from}</span>
                 para
